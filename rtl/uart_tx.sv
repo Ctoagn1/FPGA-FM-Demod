@@ -23,6 +23,7 @@ module uart_tx #(
             state <= IDLE;
             s_out <= 1;
             tx_done <= 0;
+            counter <= 0;
             bit_idx <= 0;
         end
         else begin

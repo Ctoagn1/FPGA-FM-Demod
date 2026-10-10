@@ -9,7 +9,7 @@ module uart_rx_tb;
   logic [7:0] data;
   logic valid;
 
-  logic [7:0] input_data;
+
 
   uart_rx rx_mod(
     .clk(clk), .rst(rst), .rx_in(rx), .data(data), .data_valid(valid)
