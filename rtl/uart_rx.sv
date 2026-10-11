@@ -13,7 +13,7 @@ module uart_rx #(
 );
     typedef enum {IDLE, START, DATA, STOP, CLEANUP} rstate;
     rstate state;
-    logic [3:0] counter;
+    logic [$clog2(BIT_TIME)-1:0] counter;
     logic [2:0] bit_idx;
 
     logic rx_data_r;
@@ -35,7 +35,7 @@ module uart_rx #(
         else begin
             case (state)
             IDLE: begin
-                if (!rx_in) begin
+                if (!rx_data) begin
                     state <= START;
                     counter <= 0;
                 end

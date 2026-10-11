@@ -16,7 +16,7 @@ module uart_tx #(
     t_state state;
     logic [7:0] tx_data;
     logic [2:0] bit_idx;
-    logic [3:0] counter;
+    logic [$clog2(BIT_TIME)-1:0] counter;
 
     always @(posedge clk) begin
         if (rst) begin
@@ -64,14 +64,21 @@ module uart_tx #(
                 end
                 STOP: begin
                   s_out <= 1;
-                  if (counter <= BIT_TIME - 1) begin
+                  if (counter < BIT_TIME - 1) begin
                     counter <= counter + 1;
                   end
                   else begin
                     tx_done <= 1;
-                    tx_busy <= 0;
-                    counter <= 0;
-                    state <= IDLE;
+                    if(data_valid) begin
+                        tx_busy <= 1;
+                        state <= START;
+                        tx_data <= p_in;
+                        counter <= 0;
+                      end else begin 
+                        tx_busy <= 0;
+                        counter <= 0;
+                        state <= IDLE;
+                      end
                   end
                 end
             endcase
