@@ -5,7 +5,7 @@ module uart_demo(
   output logic uart_tx_data
   );
 
-  logic [7:0] data_a, data_b;
+  logic [7:0] data_a, data_b, data_c;
   logic data_valid, tx_busy, tx_done;
   logic empty, full, start;
   assign start = !empty && !tx_busy;
@@ -14,11 +14,15 @@ module uart_demo(
     );
   
   uart_tx tx_mod(
-    .clk(clk), .rst(rst), .p_in(data_b), .data_valid(start), .s_out(uart_tx_data), .tx_busy(tx_busy), .tx_done(tx_done)
+    .clk(clk), .rst(rst), .p_in(data_c), .data_valid(start), .s_out(uart_tx_data), .tx_busy(tx_busy), .tx_done(tx_done)
     );
 
-    uart_fifo fifo(
-      .clk(clk), .rst(rst), .push(data_valid), .pop(start), .din(data_a), .dout(data_b), .empty, .full
-      );
+  uart_fifo fifo(
+    .clk(clk), .rst(rst), .push(data_valid), .pop(start), .din(data_a), .dout(data_b), .empty, .full
+    );
+
+    always_comb begin 
+      data_c = data_b + 1;
+    end
 
 endmodule

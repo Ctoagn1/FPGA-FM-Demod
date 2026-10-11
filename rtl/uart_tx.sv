@@ -1,5 +1,5 @@
 module uart_tx #(
-    parameter BAUD_RATE = 10_000_000,
+    parameter BAUD_RATE = 4_000_000,
     parameter CLK_RATE = 100_000_000,
     localparam BIT_TIME = CLK_RATE/BAUD_RATE,
     localparam HALF_BIT = BIT_TIME/2
