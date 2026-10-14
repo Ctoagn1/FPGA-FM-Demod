@@ -2,7 +2,7 @@
 
 module uart_rx_tb;
   localparam CLK_PERIOD = 10;
-  localparam CLKS_PER_BIT = 10;
+localparam CLKS_PER_BIT = 10;
   localparam NUM_BYTES = 5000;
 
   logic clk = 0, rst = 1, rx = 1;

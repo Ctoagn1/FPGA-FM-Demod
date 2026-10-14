@@ -1,5 +1,5 @@
 module uart_tx #(
-    parameter BAUD_RATE = 4_000_000,
+    parameter BAUD_RATE = 5_000_000,
     parameter CLK_RATE = 100_000_000,
     localparam BIT_TIME = CLK_RATE/BAUD_RATE,
     localparam HALF_BIT = BIT_TIME/2
@@ -17,6 +17,7 @@ module uart_tx #(
     logic [7:0] tx_data;
     logic [2:0] bit_idx;
     logic [$clog2(BIT_TIME)-1:0] counter;
+    assign tx_busy = !(state == IDLE);
 
     always @(posedge clk) begin
         if (rst) begin
@@ -29,9 +30,9 @@ module uart_tx #(
         else begin
             case (state)
                 IDLE: begin
-                  tx_busy <= 0;
+                    tx_done <= 0;
                     if(data_valid) begin
-                        tx_busy <= 1;
+
                         state <= START;
                         tx_data <= p_in;
                     end
@@ -70,12 +71,12 @@ module uart_tx #(
                   else begin
                     tx_done <= 1;
                     if(data_valid) begin
-                        tx_busy <= 1;
+
                         state <= START;
                         tx_data <= p_in;
                         counter <= 0;
                       end else begin 
-                        tx_busy <= 0;
+
                         counter <= 0;
                         state <= IDLE;
                       end

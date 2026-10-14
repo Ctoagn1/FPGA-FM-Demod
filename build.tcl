@@ -1,5 +1,5 @@
 set part   xc7a35tcpg236-1
-set top    uart_demo
+set top    phase_demod
 set outdir build
 file mkdir $outdir
 
