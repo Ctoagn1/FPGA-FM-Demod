@@ -6,9 +6,9 @@ module fir(
   output logic [15:0] out_data,
   output logic out_ready
   );
-  parameter TAPS = 47;
+  parameter TAPS = 93;
   parameter RUNS = TAPS/2 + 1;
-  parameter HIST_WIDTH = 64;
+  parameter HIST_WIDTH = 128;
   parameter DECIM = 5;
 
 
@@ -22,7 +22,7 @@ module fir(
     logic signed [15:0] a_r, b_r, c_r;
     logic v;
     logic signed [31:0] acc; 
-    logic signed [15:0] taps [0:RUNS-1] = '{8, 16, 16, 0, -37, -84, -114, -93, 0, 154, 314, 392, 300, 0, -453, -901, -1112, -856, 0, 1418, 3166, 4866, 6104, 6556}; //Q1.15 
+    logic signed [15:0] taps [0:RUNS-1] = '{-4, -3, -1, 4, 11, 17, 20, 18, 7, -9, -30, -49, -58, -53, -29, 11, 60, 105, 130, 124, 79, 0, -99, -193, -254, -256, -184, -43, 141, 329, 465, 499, 400, 161, -181, -559, -877, -1030, -928, -516, 208, 1189, 2313, 3430, 4380, 5016, 5240}; //Q1.15 
     logic signed [15:0] hist [HIST_WIDTH-1:0];
     
     typedef enum {IDLE, ACTIVE, OUT} fstate;
