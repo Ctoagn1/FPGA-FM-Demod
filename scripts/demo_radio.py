@@ -57,7 +57,6 @@ def reader():
 
 
 def audio_cb(outdata, frames, t, status):
-    global dc
     need = 2 * frames
     with rx_lock:
         if len(rx_buf) < need:

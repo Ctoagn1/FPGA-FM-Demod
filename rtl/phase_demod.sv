@@ -24,8 +24,8 @@ module phase_demod(
     subtractor s(
       .clk(clk), .rst(rst), .input_valid(cordic_output_valid), .data(phase), .output_valid(sub_output_valid), .sub_data(sub_phase)
     );
-    decim d(
-      .clk(clk), .rst(rst), .input_valid(sub_output_valid), .in_data(sub_phase), .output_ready(d_output_ready), .out_data(d_phase)
+    fir fi(
+      .clk(clk), .rst(rst), .input_valid(sub_output_valid), .in_data(sub_phase), .out_ready(d_output_ready), .out_data(d_phase)
     );
 
     sixteen_to_eight e(
